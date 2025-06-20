@@ -135,3 +135,29 @@ Feature: Marvel Characters API
     And request jsonBodyActualizacion
     When method put
     Then status 404
+
+  Scenario: Eliminar personaje (exitoso)
+    * def urlFinal = 'http://bp-se-test-cabcd9b246a5.herokuapp.com/'+username+'/api/characters'
+    * def jsonBody =
+      """
+      {
+        "name": "Iron Man",
+        "alterego": "Tony Stark",
+        "description": "Genius billionaire",
+        "powers": ["Armor", "Flight"]
+      }
+      """
+    Given url urlFinal
+    And request jsonBody
+    When method post
+    Then status 201
+    * def urlFinalActualizacion = 'http://bp-se-test-cabcd9b246a5.herokuapp.com/'+username+'/api/characters/1'
+    Given url urlFinalActualizacion
+    When method delete
+    Then status 204
+
+  Scenario: Eliminar personaje (exitoso)
+    * def urlFinalActualizacion = 'http://bp-se-test-cabcd9b246a5.herokuapp.com/'+username+'/api/characters/999'
+    Given url urlFinalActualizacion
+    When method delete
+    Then status 404
